@@ -166,7 +166,8 @@ st.title("CV Analyzer")
 st.markdown("CV'nizi yükleyin, iş ilanını yapıştırın — ne kadar uyumlu olduğunuzu öğrenin.")
 
 # --- API Key ---
-api_key = os.getenv("OPENAI_API_KEY", "")
+# Önce Streamlit secrets'dan, sonra .env'den, yoksa kullanıcıdan iste
+api_key = st.secrets.get("OPENAI_API_KEY", "") if hasattr(st, "secrets") and "OPENAI_API_KEY" in st.secrets else os.getenv("OPENAI_API_KEY", "")
 if not api_key or api_key == "buraya_kendi_api_keyinizi_yazin":
     api_key = st.text_input("OpenAI API Key", type="password", placeholder="sk-...")
 
